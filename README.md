@@ -51,18 +51,3 @@ The course will be delivered in a hybrid format, with online sessions alternatin
 - Operator Overloading
 - Inheritance Hierarchies
 
-## Getting Started
-
-To start coding in C/C++ for this course, ensure you have the following set up:
-1. **Install a C++ Compiler**:
-   - On Windows: Install [MinGW](http://www.mingw.org/) or use [Visual Studio](https://visualstudio.microsoft.com/).
-   - On Mac: Install Xcode Command Line Tools (`xcode-select --install`).
-   - On Linux: Use `gcc` (`sudo apt install gcc g++`).
-   
-2. **Install Visual Studio Code**:
-   - Download and install [Visual Studio Code](https://code.visualstudio.com/).
-   - Install C/C++ extensions for code completion and debugging.
-
-3. **Clone the repository**:
-   ```bash
-   git clone https://github.com/your-username/cpp-programming-course.git

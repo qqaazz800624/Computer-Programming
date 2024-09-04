@@ -12,7 +12,7 @@ int main() // program entry
 {
     double energy;
     energy = kinetic_energy(15, 300);
-    printf("The value of the kinetic energy is: %.3f", energy);
+    //printf("The value of the kinetic energy is: %.3f", energy);
     std::cout << "The value of the kinetic energy is: " << energy << std::endl;
     cout << "The value of the kinetic energy is: " << energy << endl;
     return 0;

@@ -2,27 +2,26 @@
 This is my first C++ program!
 It shows a message on the console.
 */
-# include <cstdio>
-# include <iostream> // header for std::cout
-# include <iomanip> // header for std::setprecision
-using namespace std;
+#include <iostream> // header for std::cout
+#include <iomanip>  // header for std::setprecision
 
-double kinetic_energy(int, double);
-// The main function
-int main() // program entry
+// Function prototype for kinetic energy calculation
+double kinetic_energy(double mass, double velocity);
+
+// Main function (program entry point)
+int main() 
 {
-    double energy;
-    energy = kinetic_energy(15, 300);
-    printf("The value of the kinetic energy is: %.3f\n", energy);
-    std::cout << std::fixed << std::setprecision(3);
-    std::cout << "The value of the kinetic energy is: " << energy << std::endl;
-    cout << "The value of the kinetic energy is: " << energy << endl;
+    double energy = kinetic_energy(15, 300); // Calculate kinetic energy
+
+    // Output the result using C++-style I/O
+    std::cout << std::fixed << std::setprecision(3); // Set precision to 3 decimal places
+    std::cout << "The value of the kinetic energy is: " << energy << " joules" << std::endl;
+
     return 0;
 }
-// user-defined function
-double kinetic_energy(int m, double v)
+
+// User-defined function to calculate kinetic energy
+double kinetic_energy(double mass, double velocity)
 {
-    double ke;
-    ke = 0.5 * m * v * v;
-    return ke;
+    return 0.5 * mass * velocity * velocity; // Kinetic energy formula
 }

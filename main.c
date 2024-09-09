@@ -5,9 +5,9 @@
 or add your own getch, system("pause") or input loop */
 
 
-int main(int argc, char *argv[])
+int main()
 {
-    
+
     int a = 123;
     float b = 123.5;
     char c = 'G';

@@ -17,26 +17,52 @@ int main()
     num_1000 = (money / 1000) % 10;
     num_10000 = (money / 10000) % 10;
 
+    int zero_flag = 0;  // To track when to print "零"
+
+    // Process the ten-thousandth place
     if (num_10000 != 0)
     {
-        printf("%s", num[num_10000]);
-        printf("%s", unit[4]);
+        printf("%s%s", num[num_10000], unit[4]);
+        zero_flag = 1;
     }
+
+    // Process the thousandth place
     if (num_1000 != 0)
     {
-        printf("%s", num[num_1000]);
-        printf("%s", unit[3]);
+        printf("%s%s", num[num_1000], unit[3]);
+        zero_flag = 1;
     }
+    else if (zero_flag == 1) // Print "零" if the thousandth place is 0
+    {
+        printf("%s", num[0]);
+        zero_flag = 0;
+    }
+    
+    // Process the hundredth place
     if (num_100 != 0)
     {
-        printf("%s", num[num_100]);
-        printf("%s", unit[2]);
+        printf("%s%s", num[num_100], unit[2]);
+        zero_flag = 1;
     }
+    else if (zero_flag == 1) // Print "零" if the hundredth place is 0
+    {
+        printf("%s", num[0]);
+        zero_flag = 0;
+    }
+
+    // Process the tenth place
     if (num_10 != 0)
     {
-        printf("%s", num[num_10]);
-        printf("%s", unit[1]);
+        printf("%s%s", num[num_10], unit[1]);
+        zero_flag = 1;
     }
+    else if (zero_flag == 1) // Print "零" if the tenth place is 0
+    {
+        printf("%s", num[0]);
+        zero_flag = 0;
+    }
+
+    // Process the ones place
     if (num_1 != 0)
     {
         printf("%s", num[num_1]);

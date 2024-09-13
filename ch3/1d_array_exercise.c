@@ -21,6 +21,7 @@ int main() {
  
     avg = (double)sum / N;
 
+    //printf("sum = %d\n", sum);
     printf("avg = %.2f\n", avg);
     printf("fail:\n");
 
@@ -29,6 +30,18 @@ int main() {
             printf("%d: %d\n", i+1, score[i]);
         }
     }
+
+    int MaxScore = 0;
+    int MaxIndex = 0;
+
+    for (i = 0; i < N; i++){
+        if (score[i] > MaxScore){
+            MaxScore = score[i];
+            MaxIndex = i;
+        }
+    }
+    printf("highest:\n");
+    printf("%d: %d\n", MaxIndex+1, MaxScore);
 
     return 0;
 }

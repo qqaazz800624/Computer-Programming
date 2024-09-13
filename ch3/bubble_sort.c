@@ -12,8 +12,18 @@ int main() {
         scanf("%d", &array[i]);
     }
 
-    for (j = N; j > 1; j--){
-        for (i = 0; i < j-1; i++){
+    // for (j = N; j > 1; j--){
+    //     for (i = 0; i < j-1; i++){
+    //         if (array[i] > array[i+1]){
+    //             temp = array[i];
+    //             array[i] = array[i+1];
+    //             array[i+1] = temp;
+    //         }
+    //     }
+    // }
+
+    for (j = 1; j < N; j++){
+        for (i = 0; i < N-j; i++){
             if (array[i] > array[i+1]){
                 temp = array[i];
                 array[i] = array[i+1];

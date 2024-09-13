@@ -1,12 +1,13 @@
 #include <stdio.h>
+#include <stdlib.h>
+#define N 3
 
 int main() {
     
     int i;
-    int scores[3];
+    int scores[N];
 
-    for (i=0; i<3; i++){
-        printf("Enter a score: ");
+    for (i=0; i<N; i++){
         scanf("%d", &scores[i]);
         printf("Score %d received.\n", scores[i]);
     }

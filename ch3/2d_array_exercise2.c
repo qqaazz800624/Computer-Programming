@@ -18,9 +18,9 @@ int main() {
         }
     }
 
-    // Output scores of students from each class
+    // Output scores of students and compute sum from each class
     for (i=0; i<CLASS; i++){
-        printf("cLass %d:\n", i+1);
+        printf("class %d:\n", i+1);
         sum = 0;
         for (j=0; j<STUDENT; j++){
             printf(" %d: %d\n", j+1, scores[i][j]);

@@ -6,10 +6,7 @@ int main()
     int row, col;
     int num_rows, type;
     
-    printf("Enter the number of rows: ");
     scanf("%d", &num_rows);
-
-    printf("Enter the type of triangle (1 for ascending, 2 for descending): ");
     scanf("%d", &type);
     if (type != 1 && type != 2){
         printf("Invalid type of triangle\n");

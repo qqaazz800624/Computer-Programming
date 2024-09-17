@@ -4,7 +4,6 @@
 int main(){
     
     int n, left, extra, count;
-    int chance = 1;
     scanf("%d", &n);
 
     left = n%4;

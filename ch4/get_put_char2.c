@@ -13,5 +13,15 @@ int main() {
     putchar(165-100); // ASCII value of 'A': 165-100 = 65
     putchar('\n');
 
+    // int i = 0;
+    // for (i = 0; i < 128; i++) {
+    //     printf("%3d: %c\n", i, i);
+    // }
+
+    char i = 0;
+    for (i = 0; i < 127; i++) {
+        printf("%3d: %c\n", i, i);
+    }
+
     return 0;
 }

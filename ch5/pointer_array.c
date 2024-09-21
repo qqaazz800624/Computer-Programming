@@ -1,31 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-#define N 5
+void printAry(int n, int *p);
+void AryZero(int n, int *p);
 
 int main(){
 
-    int A[10] = {11,22,33,44,55};
-    int *P, i;
+    int a1[5] = {11, 22, 33, 44, 55};
+    int a2[3] = {77,88,99};
 
-    P = A;  // or P = &A : Assign the address of the array A to the pointer P
-    for (i = 0; i < N; i++){
-        printf("A[%d] => %d, %d\n", i, A[i], &A[i]);
-    }
-    puts("");
+    printAry(5, a1);
+    printAry(3, a2);
 
-    for (i = 0; i < N; i++){
-        printf("P[%d] => %d, %d\n", i, P[i], &P[i]);
-    }
-    puts("");
-
-    for (i = 0; i < N; i++){
-        //printf("*(P+%d) => %d, %d\n", i, *(P+i), &*(P+i));  // &*(P+i) = P+i
-        //printf("*(P+%d) => %d, %d\n", i, *(P+i), P+i);  // &*(P+i) = P+i
-        printf("*(P+%d) => %d, %d\n", i, *P, &*P);
-        P++;
-    }
-    puts("");
+    printAry(5, a1);
+    AryZero(5, a1);
+    printAry(5, a1);
 
     return 0;
+}
+
+void printAry(int n, int *p){
+    int i;
+    for(i = 0; i < n; i++){
+        printf("%d ", p[i]);
+    }
+    puts("");
+}
+
+void AryZero(int n, int *p){
+    int i;
+    for(i = 0; i < n; i++){
+        p[i] = 0;
+    }
 }

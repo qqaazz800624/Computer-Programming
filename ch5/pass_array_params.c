@@ -1,34 +1,36 @@
 #include <stdio.h>
 #include <stdlib.h>
-void printAry(int n, int *p);
-void AryZero(int n, int *p);
 
+# define N 3
 int main(){
 
-    int a1[5] = {11, 22, 33, 44, 55};
-    int a2[3] = {77,88,99};
+    int *a[N];
+    int i,j;
+    int ct = 10;
 
-    printAry(5, a1);
-    printAry(3, a2);
+    for (i = 0; i < N; i++){
+        a[i] = (int *)malloc(sizeof(int)*(i+1));
+    }
 
-    printAry(5, a1);
-    AryZero(5, a1);
-    printAry(5, a1);
+    for (i=0; i<N; i++){
+        for (j=0; j<i+1; j++){
+            a[i][j] = ct;
+            ct += 10;
+        }
+    }
+
+    for (i=0; i<N; i++){
+        for (j=0; j<i+1; j++){
+            printf("%d ", a[i][j]);
+        }
+        puts("");
+    }
+
+    for (i=0; i<N; i++){
+        free(a[i]);
+        a[i] = NULL;
+    }
 
     return 0;
 }
 
-void printAry(int n, int *p){
-    int i;
-    for(i = 0; i < n; i++){
-        printf("%d ", p[i]);
-    }
-    puts("");
-}
-
-void AryZero(int n, int *p){
-    int i;
-    for(i = 0; i < n; i++){
-        p[i] = 0;
-    }
-}

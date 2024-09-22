@@ -15,7 +15,8 @@ int main()
             break;
         }
 
-        current_num = input - '0';
+        current_num = input - '0'; // one trick to convert char to int
+        
         if (current_num >= 0 && current_num <= 9){
             if (prev_num == 1 && current_num == 9){
                 count += 1;

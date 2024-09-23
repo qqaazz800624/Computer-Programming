@@ -58,6 +58,11 @@ void simulate(int M, int N, int X1, int Y1, int E1, int N1, int F1,
 
         // Increment time step
         time++;
+
+        if (X1 == X2 && Y1 == Y2){
+            printf("robots explode at time %d\n", time);
+            return;
+        }
     }
 
     // If the loop ends without a collision

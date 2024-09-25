@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Function to simulate the movement of the two robots and detect if they collide
+/* Function to simulate the movement of the two robots 
+and detect if they collide
+*/
 void simulate(int M, int N, int X1, int Y1, int E1, int N1, int F1, 
               int X2, int Y2, int E2, int N2, int F2){
         

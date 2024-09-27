@@ -16,8 +16,9 @@ int main(){
         scanf("%d", score+i);
     }
 
-    printAry(n, score);
-    printf("Average = %.2f\n", Avg(n, score));
+    //printAry(n, score);
+    printf("avg = %.2f\n", Avg(n, score));
+    printf("highest:\n");
     printf("%d: %d\n", MaxScore(n, score)+1, score[MaxScore(n, score)]);
 
     free(score);

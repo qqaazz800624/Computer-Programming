@@ -1,0 +1,2 @@
+txt = HelloC++
+10

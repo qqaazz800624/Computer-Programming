@@ -18,7 +18,7 @@ int main(){
         if (feof(f1)){
             break;
         }
-    }
+    } 
     
     fclose(f1);
     return 0;

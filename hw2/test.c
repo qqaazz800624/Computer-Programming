@@ -1,131 +1,108 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <ctype.h>
 #include <string.h>
 
-char* read_input_dynamic();
-char* decipher(char *str);
+#define NAME_LEN 10
+#define MAX_TRIANGLES 10000  // Define the maximum number of triangles
 
-int main(){
+// Function to compare strings (used in qsort)
+int compareNames(const void *a, const void *b) {
+    return strcmp(*(const char **)a, *(const char **)b);
+}
 
-    char **input_list = NULL;
-    size_t input_count = 0;
-    size_t input_capacity = 20;
-    size_t i;
-
-    input_list = (char **)malloc(input_capacity * sizeof(char *));
-    if (!input_list){
-        fprintf(stderr, "Memory allocation failed for input list.\n");
-        return 1;
+// Function to print a list of names with the specified title
+void printList(const char *title, char **list, int size) {
+    printf("%s: ", title);
+    if (size > 0) {
+        for (int i = 0; i < size; i++) {
+            if (i > 0) printf(",");
+            printf("%s", list[i]);
+        }
+        printf("\n");
+    } else {
+        printf("None\n");
     }
+}
 
-    while (1){
-        char *input = NULL;
-        input = read_input_dynamic();
+int main() {
+    char input[50];
+    char name[NAME_LEN];
+    int a, b, c;
 
-        if (!input){
-            fprintf(stderr, "Error reading input.\n");
-            return 1;
+    // We use fixed arrays for storing the names, assuming a maximum number of triangles
+    char notTriangle[MAX_TRIANGLES][NAME_LEN];
+    char acuteAngle[MAX_TRIANGLES][NAME_LEN];
+    char obtuseAngle[MAX_TRIANGLES][NAME_LEN];
+    char rightAngle[MAX_TRIANGLES][NAME_LEN];
+
+    // Pointers to the arrays for sorting
+    char *notTrianglePtrs[MAX_TRIANGLES];
+    char *acuteAnglePtrs[MAX_TRIANGLES];
+    char *obtuseAnglePtrs[MAX_TRIANGLES];
+    char *rightAnglePtrs[MAX_TRIANGLES];
+
+    int notTriangleSize = 0, acuteSize = 0, obtuseSize = 0, rightSize = 0;
+
+    // Input reading loop
+    while (1) {
+        // Read input
+        if (!fgets(input, sizeof(input), stdin)) {
+            break;  // End of input (in case of unexpected EOF)
         }
 
-        if (strcmp(input, "-1") == 0){
-            free(input);
+        // Check if the input is -1, which means we stop input
+        if (strcmp(input, "-1\n") == 0) {
+            break;  // End the input when we get "-1"
+        }
+
+        // Parsing input into name, a, b, c
+        if (sscanf(input, "%s %d %d %d", name, &a, &b, &c) != 4) {
+            fprintf(stderr, "Invalid input format. Skipping line.\n");
+            continue;  // Skip invalid inputs
+        }
+
+        // Safety check: Ensure we don't exceed MAX_TRIANGLES
+        if (notTriangleSize >= MAX_TRIANGLES || acuteSize >= MAX_TRIANGLES ||
+            obtuseSize >= MAX_TRIANGLES || rightSize >= MAX_TRIANGLES) {
+            fprintf(stderr, "Exceeded maximum number of triangles. Stopping input.\n");
             break;
         }
 
-        if (input_count >= input_capacity){
-            input_capacity *= 2;
-            input_list = (char **)realloc(input_list, input_capacity * sizeof(char *));
-            if (!input_list){
-                fprintf(stderr, "Memory reallocation failed for input list.\n");
-                return 1;
-            }
-        }
-        input_list[input_count++] = input;
+        // Sort a, b, c such that a <= b <= c
+        if (a > c) { int temp = a; a = c; c = temp; }
+        if (b > c) { int temp = b; b = c; c = temp; }
 
+        // Classify the triangle
+        if (a + b <= c) {
+            strcpy(notTriangle[notTriangleSize], name);
+            notTrianglePtrs[notTriangleSize] = notTriangle[notTriangleSize];
+            notTriangleSize++;
+        } else if (a * a + b * b > c * c) {
+            strcpy(acuteAngle[acuteSize], name);
+            acuteAnglePtrs[acuteSize] = acuteAngle[acuteSize];
+            acuteSize++;
+        } else if (a * a + b * b < c * c) {
+            strcpy(obtuseAngle[obtuseSize], name);
+            obtuseAnglePtrs[obtuseSize] = obtuseAngle[obtuseSize];
+            obtuseSize++;
+        } else if (a * a + b * b == c * c) {
+            strcpy(rightAngle[rightSize], name);
+            rightAnglePtrs[rightSize] = rightAngle[rightSize];
+            rightSize++;
+        }
     }
 
-    for (i=0; i<input_count; ++i){
-        char *deciphered_message = NULL;
-        deciphered_message = decipher(input_list[i]);
-        if (!deciphered_message){
-            fprintf(stderr, "Error deciphering message.\n");
-            return 1;
-        }
+    // Sort all lists alphabetically
+    if (notTriangleSize > 0) qsort(notTrianglePtrs, notTriangleSize, sizeof(char *), compareNames);
+    if (acuteSize > 0) qsort(acuteAnglePtrs, acuteSize, sizeof(char *), compareNames);
+    if (obtuseSize > 0) qsort(obtuseAnglePtrs, obtuseSize, sizeof(char *), compareNames);
+    if (rightSize > 0) qsort(rightAnglePtrs, rightSize, sizeof(char *), compareNames);
 
-        if (i > 0){
-            printf(" ");
-        }
-        printf("%s", deciphered_message);
-
-        free(deciphered_message);
-    }
-
-    printf("\n");
-
-    for (i=0; i<input_count; ++i){
-        free(input_list[i]);
-    }
-    free(input_list);
+    // Print the lists
+    printList("Not Triangle", notTrianglePtrs, notTriangleSize);
+    printList("Acute Angle", acuteAnglePtrs, acuteSize);
+    printList("Obtuse Angle", obtuseAnglePtrs, obtuseSize);
+    printList("Right Angle", rightAnglePtrs, rightSize);
 
     return 0;
-}
-
-char* read_input_dynamic(){
-    size_t buffer_size = 20;
-    size_t position = 0;
-    char *buffer = NULL;
-
-    buffer = (char *)malloc(buffer_size * sizeof(char));
-
-    if (!buffer) {
-        fprintf(stderr, "Memory allocation failed for input buffer.\n");
-        return NULL;
-    }
-
-    int ch;
-
-    while ((ch = getchar()) != EOF && ch != '\n'){
-        buffer[position++] = (char)ch;
-
-        if (position >= buffer_size){
-            buffer_size *= 2;
-            buffer = (char *)realloc(buffer, buffer_size * sizeof(char));
-            if (!buffer){
-                fprintf(stderr, "Memory reallocation failed.\n");
-                return NULL;
-            }
-        }
-    }
-    buffer[position] = '\0';
-    return buffer;
-}
-
-char* decipher(char *str){
-    size_t length = strlen(str);
-    char *result = NULL;
-    size_t i;
-
-    result = (char *)malloc((length + 1)*sizeof(char));
-
-    if (!result){
-        fprintf(stderr, "Memory allocation failed for decipher buffer.\n");
-        return NULL;
-    }
-
-    for (i=0; i<length; ++i){
-        if (isalpha(str[i])){
-            char ch = tolower(str[i]);
-            if (ch >= 'a' && ch <= 'c'){
-                ch = ch + 26 - 3;
-            } else {
-                ch = ch - 3;
-            }
-            result[i] = ch;
-        } else {
-            result[i] = str[i];
-        }
-    }
-    result[length] = '\0';
-    return result;
 }

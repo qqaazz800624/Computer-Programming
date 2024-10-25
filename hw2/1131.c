@@ -2,42 +2,41 @@
 #include <stdlib.h>
 
 
-int main() 
-{
- int *score;
- int h;
- int k;
- int i,j;
- int tmp;
- 
- 
- scanf("%d", &h);
- scanf("%d", &k);
- score=(int*)malloc(sizeof(int)*h);
- 
- 
- for (i=0;i<h;i++){
-  scanf("%d",&score[i]); 
- }
- if (h%2==0){
-  printf("%d\n",score[h/2-1]);
-  if (score[h/2-1]>=k){
-   printf("BETTER LUCK NEXT TIME!\n");
-  }
-  else{
-   printf("WINNER WINNER CHICKEN DINNER!\n");
-  }
- }
- else{
-  printf("%d\n",score[(h-1)/2]);
-  if (score[(h-1)/2]>=k){
-   printf("BETTER LUCK NEXT TIME!\n");
-  }
-  else{
-   printf("WINNER WINNER CHICKEN DINNER!\n");
-  }
- }
- 
- free(score);
- return 0;
+int main(){
+
+    int N, K;
+    int *scores;
+    int i;
+    int median;
+
+    scanf("%d", &N);
+    scanf("%d", &K);
+
+    scores = (int*)malloc(sizeof(int) * N);
+    for (i = 0; i < N; i++){
+        scanf("%d", &scores[i]);
+    }
+
+    if (N % 2 == 0){
+        median = scores[N/2 - 1];
+        printf("%d\n", median);
+        if (K > median){
+            printf("WINNER WINNER CHICKEN DINNER!\n");
+        }
+        else{
+            printf("BETTER LUCK NEXT TIME!\n");
+        }
+    } else {
+        median = scores[(N-1)/2];
+        printf("%d\n", median);
+        if (K > median){
+            printf("WINNER WINNER CHICKEN DINNER!\n");
+        }
+        else{
+            printf("BETTER LUCK NEXT TIME!\n");
+        }
+    }
+    free(scores);
+
+    return 0;
 }

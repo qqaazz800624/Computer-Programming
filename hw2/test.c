@@ -2,37 +2,104 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define MAX_INPUT_LENGTH 10000  // Max length of the input string
+#define MAX_WORDS 2000   // Max number of words
+
+int is_word_exist(char *word, char *word_list[], int count);
+int compare_words(const void *a, const void *b);
+
 int main(){
 
-    int N;
-    int *heights;
+    char *line1;
+    char *line2;
     int i;
-    int max_height = -10000;
-    int max_height_index = 0;
-    int min_height = 10000;
-    int min_height_index = 0;
 
-    scanf("%d", &N);
-    heights = (int*)malloc(sizeof(int)*N);
-    for (i = 0; i < N; i++){
-        scanf("%d", &heights[i]);
+    line1 = (char *)malloc(sizeof(char)*MAX_INPUT_LENGTH);
+    line2 = (char *)malloc(sizeof(char)*MAX_INPUT_LENGTH);
+
+    if (line1 == NULL || line2 == NULL) {
+        fprintf(stderr, "Memory allocation failed.\n");
+        return 1;
     }
 
-    for (i = 0; i < N; i++){
-        if (heights[i] > max_height){
-            max_height = heights[i];
-            max_height_index = i + 1;
-        }
-        if (heights[i] < min_height){
-            min_height = heights[i];
-            min_height_index = i + 1;
-        }
+    if (fgets(line1, MAX_INPUT_LENGTH, stdin) == NULL) {
+        fprintf(stderr, "Error reading input.\n");
+        free(line1);
+        free(line2);
+        return 1;
+    }
+    line1[strcspn(line1, "\n")] = '\0';  // remove the newline character
+
+    if (fgets(line2, MAX_INPUT_LENGTH, stdin) == NULL) {
+        fprintf(stderr, "Error reading input.\n");
+        free(line1);
+        free(line2);
+        return 1;
+    }
+    line2[strcspn(line2, "\n")] = '\0';  // remove the newline character
+
+    char **words;
+    words = (char **)malloc(sizeof(char *)*MAX_WORDS);
+    if (words == NULL){
+        fprintf(stderr, "Memory allocation failed.\n");
+        free(line1);
+        free(line2);
+        return 1;
     }
 
-    printf("%d %d\n", max_height_index, max_height);
-    printf("%d %d\n", min_height_index, min_height);
 
-    free(heights);
+    int word_count = 0;
+
+    char *token;
+    token = strtok(line1, ";");
+    while (token != NULL){
+        if (is_word_exist(token, words, word_count) == 0){
+            words[word_count] = strdup(token);
+            word_count++;
+        }
+        token = strtok(NULL, ";");
+    }
+
+    token = strtok(line2, ",");
+    while (token != NULL){
+        if (is_word_exist(token, words, word_count) == 0){
+            words[word_count] = strdup(token);
+            word_count++;
+        }
+        token = strtok(NULL, ",");
+    }
+
+    qsort(words, word_count, sizeof(char *), compare_words);
+
+    for (i=0; i<word_count; i++){
+        printf("%s", words[i]);
+        if (i != word_count - 1){
+            printf(" ");
+        }
+        free(words[i]);
+    }
+    printf("\n");
+
+    free(line1);
+    free(line2);
+    free(words);
 
     return 0;
+}
+
+int is_word_exist(char *word, char *word_list[], int count){
+    int i;
+    for (i=0; i<count; i++){
+        if (strcmp(word, word_list[i]) == 0){
+            return 1;
+        }
+    }
+    return 0;
+}
+
+// compare words alphabetically
+int compare_words(const void *a, const void *b){
+    const char *word_a = *(const char **)a;
+    const char *word_b = *(const char **)b;
+    return strcmp(word_a, word_b);
 }

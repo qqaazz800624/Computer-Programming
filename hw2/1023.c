@@ -1,36 +1,38 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
+int main(){
 
+    int N;
+    int *heights;
+    int i;
+    int max_height = -10000;
+    int max_height_index = 0;
+    int min_height = 10000;
+    int min_height_index = 0;
 
-int main() 
-{
-   int num;
-   int *height;
-   int i;
-   int highest=-10000;
-   int highest_place;
-   int lowest=10000;
-   int lowest_place;
-   
-   scanf("%d",&num);
-   height=(int*)malloc(sizeof(int)*num);
-   
-   for (i=0;i<num;i++){
-     scanf("%d",&*(height+i));
-     if (height[i]>highest){
-      highest=height[i];
-      highest_place=i+1;
+    scanf("%d", &N);
+    heights = (int*)malloc(sizeof(int)*N);
+    for (i = 0; i < N; i++){
+        scanf("%d", &heights[i]);
     }
-     if (height[i]<lowest){
-      lowest=height[i];
-      lowest_place=i+1;
-    }
-   }
 
-   printf("%d %d\n", highest_place, highest);
-   printf("%d %d\n", lowest_place, lowest);
-   free(height);
-   return 0;
+    for (i = 0; i < N; i++){
+        if (heights[i] > max_height){
+            max_height = heights[i];
+            max_height_index = i + 1;
+        }
+        if (heights[i] < min_height){
+            min_height = heights[i];
+            min_height_index = i + 1;
+        }
+    }
+
+    printf("%d %d\n", max_height_index, max_height);
+    printf("%d %d\n", min_height_index, min_height);
+
+    free(heights);
+
+    return 0;
 }

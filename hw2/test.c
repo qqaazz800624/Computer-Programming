@@ -1,42 +1,38 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <string.h>
 
 int main(){
 
-    int N, K;
-    int *scores;
+    int N;
+    int *heights;
     int i;
-    int median;
+    int max_height = -10000;
+    int max_height_index = 0;
+    int min_height = 10000;
+    int min_height_index = 0;
 
     scanf("%d", &N);
-    scanf("%d", &K);
-
-    scores = (int*)malloc(sizeof(int) * N);
+    heights = (int*)malloc(sizeof(int)*N);
     for (i = 0; i < N; i++){
-        scanf("%d", &scores[i]);
+        scanf("%d", &heights[i]);
     }
 
-    if (N % 2 == 0){
-        median = scores[N/2 - 1];
-        printf("%d\n", median);
-        if (K > median){
-            printf("WINNER WINNER CHICKEN DINNER!\n");
+    for (i = 0; i < N; i++){
+        if (heights[i] > max_height){
+            max_height = heights[i];
+            max_height_index = i + 1;
         }
-        else{
-            printf("BETTER LUCK NEXT TIME!\n");
-        }
-    } else {
-        median = scores[(N-1)/2];
-        printf("%d\n", median);
-        if (K > median){
-            printf("WINNER WINNER CHICKEN DINNER!\n");
-        }
-        else{
-            printf("BETTER LUCK NEXT TIME!\n");
+        if (heights[i] < min_height){
+            min_height = heights[i];
+            min_height_index = i + 1;
         }
     }
-    free(scores);
+
+    printf("%d %d\n", max_height_index, max_height);
+    printf("%d %d\n", min_height_index, min_height);
+
+    free(heights);
 
     return 0;
 }

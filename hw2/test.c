@@ -1,27 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <string.h>
 
 int main(){
 
-    int N;
+    int N = 5;
     int *array;
-    int i;
-    int median;
+    int i, j;
 
-    scanf("%d", &N);
+    array = (int *)malloc(N * sizeof(int));
 
-    array = (int*)malloc(sizeof(int)*N);
-    for (i=0; i<N; i++){
+    for (i = 0; i < N; i++){
         scanf("%d", &array[i]);
     }
 
-    if (N % 2 == 0){
-        median = (array[N/2 - 1] + array[N/2] + 1)/2;
-        printf("%d\n", median);
-    } else {
-        median = array[N/2];
-        printf("%d\n", median);
+    for (i = 0; i < N; i++){
+        printf("%d\t", array[i]);
+        for (j = 0; j < array[i]; j++){
+            printf("*");
+        }
+        printf("\n");
     }
 
     free(array);

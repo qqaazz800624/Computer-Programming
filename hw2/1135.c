@@ -3,24 +3,29 @@
 
 
 int main(){
-    int n;
-    int *arr;
+
+    int N;
+    int *array;
     int i;
-    int ans;
-    scanf("%d", &n);
-    arr = (int*)malloc(sizeof(int)*n);
-    
-    for (i=0; i<n; i++){
-        scanf("%d", &arr[i]);
+    int median;
+
+    scanf("%d", &N);
+
+    array = (int*)malloc(sizeof(int)*N);
+    for (i=0; i<N; i++){
+        scanf("%d", &array[i]);
     }
 
-    if(n%2==0){
-        ans = (arr[n/2-1]+arr[n/2]+1)/2;
+    if (N % 2 == 0){
+        median = (array[N/2 - 1] + array[N/2] + 1)/2;
+        printf("%d\n", median);
+    } else {
+        median = array[N/2];
+        printf("%d\n", median);
     }
-    else{
-        ans = arr[n/2];
-    }
-    printf("%d\n", ans);
-    free(arr);
+
+    free(array);
+
     return 0;
 }
+

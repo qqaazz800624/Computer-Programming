@@ -20,6 +20,7 @@ int main() {
     char **acuteAngle;
     char **obtuseAngle;
     char **rightAngle;
+
     int notTriangleSize = 0, acuteAngleSize = 0, obtuseAngleSize = 0, rightAngleSize = 0;
     int notTriangleCapacity = INITIAL_CAPACITY, acuteAngleCapacity = INITIAL_CAPACITY;
     int obtuseAngleCapacity = INITIAL_CAPACITY, rightAngleCapacity = INITIAL_CAPACITY;
@@ -51,8 +52,12 @@ int main() {
         }
 
         // Sort the sides such that a <= b <= c
-        if (a > c) { int temp = a; a = c; c = temp; }
-        if (b > c) { int temp = b; b = c; c = temp; }
+        if (a > c) { 
+            int temp = a; a = c; c = temp; 
+            }
+        if (b > c) { 
+            int temp = b; b = c; c = temp; 
+            }
 
         // Classify triangle based on side lengths
         if (a + b <= c) {
@@ -83,10 +88,18 @@ int main() {
     printList("Right Angle", rightAngle, rightAngleSize);
 
     // Free memory for each category list
-    for (int i = 0; i < notTriangleSize; i++) free(notTriangle[i]);
-    for (int i = 0; i < acuteAngleSize; i++) free(acuteAngle[i]);
-    for (int i = 0; i < obtuseAngleSize; i++) free(obtuseAngle[i]);
-    for (int i = 0; i < rightAngleSize; i++) free(rightAngle[i]);
+    for (int i = 0; i < notTriangleSize; i++) {
+        free(notTriangle[i]);
+    }
+    for (int i = 0; i < acuteAngleSize; i++) {
+        free(acuteAngle[i]);
+    }
+    for (int i = 0; i < obtuseAngleSize; i++) {
+        free(obtuseAngle[i]);
+    }
+    for (int i = 0; i < rightAngleSize; i++) {
+        free(rightAngle[i]);
+    }
     free(notTriangle);
     free(acuteAngle);
     free(obtuseAngle);

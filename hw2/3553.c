@@ -46,9 +46,9 @@ int main() {
             break;
         }
 
-        // if (strncmp(input, "-1", 2) == 0) {
-        //     break;
-        // }
+        if (strncmp(input, "-1", 2) == 0) {
+            break;
+        }
 
         sscanf(input, "%d %s %s %lf %lf %lf %lf %[^\n]",
                &e.id, e.date, e.time, &e.longitude, &e.latitude, &e.magnitude, &e.depth, e.location);

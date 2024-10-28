@@ -1,124 +1,105 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
 
+struct Earthquake {
+    int id;
+    char date[11];
+    char time[6];
+    double longitude;
+    double latitude;
+    double magnitude;
+    double depth;
+    char location[100];
+};
 
-char* read_input_dynamic();
-char* decipher(char *str);
+typedef struct Earthquake Earthquake;
+
+int convertDateToInt(const char* date);
+int compareByMagnitude(const void *a, const void *b);
 
 int main() {
     
-    char **input_list = NULL;
-    int input_count = 0;
-    size_t INPUT_CAPACITY = 20;
+    int startYear, startMonth, startDay;
+    int endYear, endMonth, endDay;
+    int startDate, endDate;
+    int count = 0;
     int i;
 
-    input_list = (char **)malloc(INPUT_CAPACITY * sizeof(char *));
-    if (!input_list) {
-        fprintf(stderr, "Memory allocation failed for input list.\n");
-        return 1;
-    }
+    scanf("%d %d %d", &startYear, &startMonth, &startDay);
+    scanf("%d %d %d", &endYear, &endMonth, &endDay);
 
+    char startDateStr[11], endDateStr[11];
+    sprintf(startDateStr, "%d/%d/%d", startYear, startMonth, startDay); // char 2024/03/01
+    sprintf(endDateStr, "%d/%d/%d", endYear, endMonth, endDay);        // char 2024/03/31
+
+    startDate = convertDateToInt(startDateStr);  // int 20240301 
+    endDate = convertDateToInt(endDateStr);      // int 20240331 
+
+    Earthquake *earthquakes;
+    earthquakes = (Earthquake *)malloc(1000 * sizeof(Earthquake));
+    
     while (1){
-        char *input = NULL;
-        input = read_input_dynamic();
-
-        if (!input){
-            fprintf(stderr, "Error reading input.\n");
-            return 1;
-        }
-
-        if (strcmp(input, "-1") == 0){
-            free(input);
+        Earthquake e;
+        char input[200];
+        if (fgets(input, sizeof(input), stdin) == NULL) {
             break;
         }
 
-        if (input_count >= INPUT_CAPACITY){
-            INPUT_CAPACITY *= 2;
-            input_list = (char **)realloc(input_list, INPUT_CAPACITY * sizeof(char *));
-            if (!input_list){
-                fprintf(stderr, "Memory reallocation failed for input list.\n");
-                return 1;
-            }
+        // if (strncmp(input, "-1", 2) == 0) {
+        //     break;
+        // }
+
+        sscanf(input, "%d %s %s %lf %lf %lf %lf %[^\n]",
+               &e.id, e.date, e.time, &e.longitude, &e.latitude, &e.magnitude, &e.depth, e.location);
+
+        int quakeDate = convertDateToInt(e.date);
+
+        if (quakeDate >= startDate && quakeDate <= endDate) {
+            earthquakes[count] = e;
+            count++;
         }
-        input_list[input_count++] = input;
+    }
+    if (count == 0) {
+        printf("No Data\n");
+        free(earthquakes);
+        return 0;
     }
 
-    for (i=0; i<input_count; ++i){
-        char *decipherd_message = NULL;
-        decipherd_message = decipher(input_list[i]);
-        if (!decipherd_message){
-            fprintf(stderr, "Error deciphering message.\n");
-            return 1;
-        }
-        if (i > 0){
-            printf(" ");
-        }
-        printf("%s", decipherd_message);
-        free(decipherd_message);
-    }
-    printf("\n");
+    qsort(earthquakes, count, sizeof(Earthquake), compareByMagnitude);
 
-    for (i=0; i<input_count; ++i){
-        free(input_list[i]);
+    printf("編號\t日期\t時間\t經度\t緯度\t規模\t深度\t位置\n");
+    for (i=0; i<count; i++){
+        printf("%03d\t%s\t%s\t%.2f\t%.2f\t%.1f\t%.1f\t%s\n", 
+                earthquakes[i].id, 
+                earthquakes[i].date, 
+                earthquakes[i].time, 
+                earthquakes[i].longitude, 
+                earthquakes[i].latitude, 
+                earthquakes[i].magnitude, 
+                earthquakes[i].depth, 
+                earthquakes[i].location);
     }
-    free(input_list);
+
+    free(earthquakes);
 
     return 0;
 }
 
-char* read_input_dynamic(){
-    size_t buffer_size = 20;
-    char *buffer = NULL;
-    int ch;
-    int position = 0;
-
-    buffer = (char *)malloc(buffer_size * sizeof(char));
-    if (!buffer) {
-        fprintf(stderr, "Memory allocation failed for input buffer.\n");
-        return NULL;
-    }
-
-    while ((ch = getchar()) != EOF && ch != '\n'){
-        buffer[position++] = (char)ch;
-        if (position >= buffer_size){
-            buffer_size *= 2;
-            buffer = (char *)realloc(buffer, buffer_size * sizeof(char));
-            if (!buffer){
-                fprintf(stderr, "Memory reallocation failed.\n");
-                return NULL;
-            }
-        }
-    }
-    buffer[position] = '\0';
-    return buffer;
+int convertDateToInt(const char* date){
+    int year, month, day;
+    sscanf(date, "%d/%d/%d", &year, &month, &day);
+    return year * 10000 + month * 100 + day;
 }
 
-char* decipher(char *str){
-    size_t len = strlen(str);
-    char *result = NULL;
-    int i;
-
-    result = (char *)malloc((len+1) * sizeof(char));
-    if (!result){
-        fprintf(stderr, "Memory allocation failed for decipher buffer.\n");
-        return NULL;
+int compareByMagnitude(const void *a, const void *b){
+    Earthquake *e1 = (Earthquake *)a;
+    Earthquake *e2 = (Earthquake *)b;
+    if (e1->magnitude < e2->magnitude) {
+        return 1;
     }
-
-    for (i=0; i<len; ++i){
-        if (isalpha(str[i])){
-            char ch = tolower(str[i]);
-            if (ch >= 'a' && ch <= 'c'){
-                ch = ch + 26 - 3;
-            } else {
-                ch = ch - 3;
-            }
-            result[i] = ch;
-        } else {
-            result[i] = str[i];
-        }
+    if (e1->magnitude > e2->magnitude) {
+        return -1;
     }
-    result[len] = '\0';
-    return result;
+    return 0;
 }

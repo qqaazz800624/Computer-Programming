@@ -10,17 +10,17 @@ class Pokemon {
             HpCur = 0;
             HpMax = 0;
             tools = new string[100];
-        };
+        }
 
         Pokemon(string na, int lv, int hpc, int hpm){
             SetData(na, lv, hpc, hpm);
             tools = new string[100];
-        };
+        }
 
         ~Pokemon(){
             cout << Name << " is released." << endl;
             delete [] tools;
-        };
+        }
 
         void Show();
 
@@ -35,7 +35,7 @@ class Pokemon {
             Lv = lv;
             HpCur = hpc;
             HpMax = hpm;
-        };
+        }
 
         void Attack(Pokemon &target){
             if (HpCur <= 0){
@@ -48,7 +48,7 @@ class Pokemon {
             }
             cout << Name << " attacks " << target.Name << " " << Lv << " points." << endl;
             target.Defense(Lv);
-        };
+        }
 
         void Defense(int n){
             HpCur -= n;
@@ -56,12 +56,12 @@ class Pokemon {
                 cout << Name << " fainted." << endl;
                 HpCur = 0;
             }
-        };
+        }
 
         void Cure(){
             cout << Name << " is cured." << endl;
             HpCur = HpMax;
-        };
+        }
 
     private:
         string Name;
@@ -75,7 +75,7 @@ void Pokemon::Show(){
     cout << "Name: " << Name << endl;
     cout << "Lv: " << Lv << endl;
     cout << "HP: " << HpCur << "/" << HpMax << endl;
-};
+}
 
 
 int main(){

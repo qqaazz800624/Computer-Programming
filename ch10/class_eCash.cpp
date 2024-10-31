@@ -48,6 +48,8 @@ int main(){
     while (1){
         char enter;
         cin >> enter;
+        int m;
+
         if (enter == 'q'){
             e.quit();
             break;

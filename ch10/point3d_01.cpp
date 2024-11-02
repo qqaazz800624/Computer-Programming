@@ -41,7 +41,7 @@ class Point2D{
         int Y;
 };
 
-class Point3D : public Point2D{
+class Point3D : protected Point2D{
     public:
         Point3D(){
             Z = 0;
@@ -80,6 +80,7 @@ int main(){
     Point3D p3d1, p3d2;
 
     cout << "p3d1:\n";
+    //p3d1.show2D();
     p3d1.show3D();
     cout << "p3d2:\n";
     p3d2.show3D();

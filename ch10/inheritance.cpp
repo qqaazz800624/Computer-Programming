@@ -24,7 +24,8 @@ class Person {
             cout << "Email: " << Email << endl;
         }
 
-    private:
+    //private:
+    protected:
         string Name;
         string Phone;
         string Email;
@@ -34,7 +35,8 @@ class Student: public Person{
     public:
         void inputStudent(){
             cout << "Enter student data: " << endl;
-            inputPerson();
+            //inputPerson();
+            cin >> Name;  // Name is protected in Person class
             cout << "Student ID: ";
             cin >> StudentID;
             cout << "Department: ";
@@ -78,6 +80,7 @@ class Teacher: public Person{
 
 int main(){
 
+    Person p1;
     Student s1;
     Teacher t1;
     //s1.inputPerson();

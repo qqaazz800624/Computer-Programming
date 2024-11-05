@@ -1,4 +1,4 @@
-#include "1500_bag.h"
+#include "bag.h"
 #include <stdio.h>
 
 void ans(int n,int k, int a[]){

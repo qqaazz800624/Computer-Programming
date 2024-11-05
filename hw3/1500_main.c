@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
  
-#include "1500_bag.h"
+#include "bag.h"
 //#include "1500_bag.c"
 //bag.c 在 自己的電腦上需要保留就好，上傳時千萬別留著。（如果是用devC++的話）
 

@@ -16,7 +16,7 @@ typedef struct {
 Contact phonebook[MAX_CONTACTS];
 int contact_count = 0;
 
-// Function prototypes
+
 void addContact();
 void listContacts();
 void saveToFile();

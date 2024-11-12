@@ -34,27 +34,30 @@ class Disques{
         }
 
         void wait(string language){
-            bool Unanswered = false;
+            bool unanswered = false;
             cout << "Search: " << language << endl;
             for (vector<question>::const_iterator it = q.begin(); it != q.end(); ++it){
                 if (it->language == language && it->answer == false){
                     cout << it->id << " " << it->language << endl;
-                    Unanswered = true;
+                    unanswered = true;
                 }
             }
-            if (!Unanswered){
+            if (!unanswered){
                 cout << "No more questions" << endl;
             }
         }
 
         void finish(){
-            bool Answered = false;
+            bool answered = false;
             cout << "Finished:" << endl;
             for (vector<question>::const_iterator it = q.begin(); it != q.end(); ++it){
                 if (it->answer == true){
                     cout << it->id << " " << it->language << endl;
-                    Answered = true;
+                    answered = true;
                 }
+            }
+            if (!answered) {
+                cout << "No more questions" << endl;
             }
         }
 
@@ -62,6 +65,13 @@ class Disques{
         vector<question> q;
 
 };
+
+int stringToInt(const string &str) {
+    stringstream ss(str);
+    int num;
+    ss >> num;
+    return num;
+}
 
 int main() {
     Disques system;
@@ -80,16 +90,10 @@ int main() {
 
 
         if (action == "Q") {
-            stringstream ss;
-            int id;
-            ss << id_str;
-            ss >> id;
+            int id = stringToInt(id_str);
             system.ask(id, language);
         } else if (action == "A") {
-            stringstream ss;
-            int id;
-            ss << id_str;
-            ss >> id;
+            int id = stringToInt(id_str);
             system.ans(id);
         } else if (action == "W") {
             system.wait(id_str);

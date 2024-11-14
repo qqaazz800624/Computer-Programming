@@ -3,6 +3,7 @@
 #include <string.h>
 
 #define MAX_UNITS 100  
+#define INITIAL_LINE_LENGTH 50
 
 typedef struct {
     int unit_code;
@@ -14,6 +15,7 @@ int compare_units(const void *a, const void *b);
 
 
 int main() {
+    int i;
     char filename[100];
     scanf("%s", filename);
 
@@ -27,8 +29,15 @@ int main() {
     UnitCount units[MAX_UNITS];  
     int unit_count = 0;          
 
-    char line[50];
-    while (fgets(line, sizeof(line), file) != NULL) {
+    size_t line_length = INITIAL_LINE_LENGTH;
+    char *line;
+    line = (char *)malloc(line_length * sizeof(char));
+    if (line == NULL) {
+        fprintf(stderr, "Error allocating memory\n");
+        return 1;
+    }
+
+    while (fgets(line, line_length, file) != NULL) {
         if (strlen(line) < 9) continue;
 
         char type = line[0];
@@ -48,6 +57,7 @@ int main() {
     }
 
     fclose(file);
+    free(line);
 
     qsort(units, unit_count, sizeof(UnitCount), compare_units);
 
@@ -58,7 +68,7 @@ int main() {
 
     printf("\n");
 
-    for (int i = 0; i < unit_count; i++) {
+    for (i = 0; i < unit_count; i++) {
         printf("單位%d: %d張\n", units[i].unit_code, units[i].count);
     }
 
@@ -66,7 +76,8 @@ int main() {
 }
 
 int find_or_add_unit(UnitCount units[], int *unit_count, int unit_code) {
-    for (int i = 0; i < *unit_count; i++) {
+    int i;
+    for (i = 0; i < *unit_count; i++) {
         if (units[i].unit_code == unit_code) {
             return i;  
         }

@@ -1,108 +1,117 @@
 #include <iostream>
-#include <string>
-#include <vector>
 #include <sstream>
+#include <string>
 
 using namespace std;
 
-struct question{
+struct Question {
     int id;
     string language;
-    bool answer;
+    bool answered;
 };
 
-class Disques{
+class Disques {
+    private:
+        Question questions[50];
+        int questionCount;
 
     public:
-        void ask(int id, string language){
-            question newQuestion = {id, language, false};
-            q.push_back(newQuestion);
+        Disques() : questionCount(0) {}
+
+        void ask(int id, const string &language) {
+            if (questionCount >= 50) {
+                cout << "Cannot add more questions." << endl;
+                return;
+            }
+            
+            questions[questionCount].id = id;
+            questions[questionCount].language = language;
+            questions[questionCount].answered = false;
+            questionCount++;
+
             cout << "Ask " << id << " in " << language << endl;
         }
 
-        void ans(int id){
+        void ans(int id) {
             bool found = false;
-            for (vector<question>::iterator it = q.begin(); it != q.end(); ++it){
-                if (it->id == id){
-                    it->answer = true;
+            for (int i = 0; i < questionCount; i++) {
+                if (questions[i].id == id) {
+                    questions[i].answered = true;
                     found = true;
                 }
             }
-            if (found){
+            
+            if (found) {
                 cout << "Answer " << id << endl;
-            } 
+            }
         }
 
-        void wait(string language){
-            bool unanswered = false;
+        void wait(const string &language) {
+            bool hasUnanswered = false;
             cout << "Search: " << language << endl;
-            for (vector<question>::const_iterator it = q.begin(); it != q.end(); ++it){
-                if (it->language == language && it->answer == false){
-                    cout << it->id << " " << it->language << endl;
-                    unanswered = true;
+            
+            for (int i = 0; i < questionCount; i++) {
+                if (questions[i].language == language && !questions[i].answered) {
+                    cout << questions[i].id << " " << questions[i].language << endl;
+                    hasUnanswered = true;
                 }
             }
-            if (!unanswered){
+            
+            if (!hasUnanswered) {
                 cout << "No more questions" << endl;
             }
         }
 
-        void finish(){
-            bool answered = false;
-            cout << "Finished:" << endl;
-            for (vector<question>::const_iterator it = q.begin(); it != q.end(); ++it){
-                if (it->answer == true){
-                    cout << it->id << " " << it->language << endl;
-                    answered = true;
+
+
+        void finish() {
+            bool hasAnswered = false;
+            cout << "Finished: " << endl;
+            
+            for (int i = 0; i < questionCount; i++) {
+                if (questions[i].answered) {
+                    cout << questions[i].id << " " << questions[i].language << endl;
+                    hasAnswered = true;
                 }
             }
-            if (!answered) {
+            
+            if (!hasAnswered) {
                 cout << "No more questions" << endl;
             }
         }
-
-    private:
-        vector<question> q;
-
 };
-
-int stringToInt(const string &str) {
-    stringstream ss(str);
-    int num;
-    ss >> num;
-    return num;
-}
 
 int main() {
     Disques system;
-    string line;
+    string input;
 
-    while (true) {
-        
-        getline(cin, line);
+    while (getline(cin, input)) {
+        if (input.empty()) continue;
 
-        stringstream ss(line);
-        string action, id_str, language;
-
-        getline(ss, action, ',');
-        getline(ss, id_str, ',');
-        getline(ss, language, ',');
-
-
-        if (action == "Q") {
-            int id = stringToInt(id_str);
+        char command = input[0];
+        if (command == 'Q') {
+            int id;
+            string language;
+            char comma;
+            istringstream ss(input);
+            ss >> command >> comma >> id >> comma >> language;
             system.ask(id, language);
-        } else if (action == "A") {
-            int id = stringToInt(id_str);
+        } else if (command == 'A') {
+            int id;
+            char comma;
+            istringstream ss(input);
+            ss >> command >> comma >> id;
             system.ans(id);
-        } else if (action == "W") {
-            system.wait(id_str);
-        } else if (action == "F") {
+        } else if (command == 'W') {
+            string language = input.substr(2);  
+            system.wait(language);
+        } else if (command == 'F') {
             system.finish();
-        } else if (action == "E") {
+        } else if (command == 'E') {
             cout << "Exit" << endl;
             break;
         }
     }
+
     return 0;
 }

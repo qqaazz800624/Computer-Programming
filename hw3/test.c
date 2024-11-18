@@ -1,93 +1,62 @@
+#include "fill_array.h"
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
-#define MAX_UNITS 100  
-#define INITIAL_LINE_LENGTH 50
-
-typedef struct {
-    int unit_code;
-    int count;
-} UnitCount;
-
-int find_or_add_unit(UnitCount units[], int *unit_count, int unit_code);
-int compare_units(const void *a, const void *b);
-
-
-int main() {
+void fill_array(int *ptr[], int n){
     int i;
-    char filename[100];
-    scanf("%s", filename);
-
-    FILE *file = fopen(filename, "r");
-    if (file == NULL) {
-        fprintf(stderr, "Error opening file: %s\n", filename);
-        return 1;
+    int *arr_start;
+    arr_start = ptr[0];
+    for (i = 0; i < n; i++){
+        *ptr[i] = i;
     }
 
-    int coupon_counts[4] = {0};  
-    UnitCount units[MAX_UNITS];  
-    int unit_count = 0;          
-
-    size_t line_length = INITIAL_LINE_LENGTH;
-    char *line;
-    line = (char *)malloc(line_length * sizeof(char));
-    if (line == NULL) {
-        fprintf(stderr, "Error allocating memory\n");
-        return 1;
-    }
-
-    while (fgets(line, line_length, file) != NULL) {
-        if (strlen(line) < 9) continue;
-
-        char type = line[0];
-        int type_index;
-        if (type == 'A') type_index = 0;
-        else if (type == 'B') type_index = 1;
-        else if (type == 'C') type_index = 2;
-        else if (type == 'D') type_index = 3;
-        else continue;  
-
-        coupon_counts[type_index]++;
-
-        int unit_code = atoi(&line[strlen(line) - 3]);
-
-        int index = find_or_add_unit(units, &unit_count, unit_code);
-        units[index].count++;
-    }
-
-    fclose(file);
-    free(line);
-
-    qsort(units, unit_count, sizeof(UnitCount), compare_units);
-
-    printf("優惠券A: %d張\n", coupon_counts[0]);
-    printf("優惠券B: %d張\n", coupon_counts[1]);
-    printf("優惠券C: %d張\n", coupon_counts[2]);
-    printf("優惠券D: %d張\n", coupon_counts[3]);
-
-    printf("\n");
-
-    for (i = 0; i < unit_count; i++) {
-        printf("單位%d: %d張\n", units[i].unit_code, units[i].count);
-    }
-
-    return 0;
-}
-
-int find_or_add_unit(UnitCount units[], int *unit_count, int unit_code) {
-    int i;
-    for (i = 0; i < *unit_count; i++) {
-        if (units[i].unit_code == unit_code) {
-            return i;  
+    int max_index = 0;
+    for (i=0; i<n; i++){
+        int index = ptr[i] - arr_start; // calculate the number of elements 
+        if (index > max_index){
+            max_index = index;
         }
     }
-    units[*unit_count].unit_code = unit_code;
-    units[*unit_count].count = 0;
-    return (*unit_count)++;
-}
 
+    for (i=0; i<= max_index; i++){
+        int is_pointed = 0;
+        int j;
+        for (j=0; j<n; j++){
+            if (&arr_start[i] == ptr[j]){
+                is_pointed = 1;
+                break;
+            }
+        }
 
-int compare_units(const void *a, const void *b) {
-    return ((UnitCount *)a)->unit_code - ((UnitCount *)b)->unit_code;
+        if (!is_pointed){
+            int left_value = 0, right_value = 0;
+            int found_left = 0, found_right = 0;
+            int left, right;
+            for (left = i - 1; left >= 0; left--){
+                for (j=0; j<n; j++){
+                    if (&arr_start[left] == ptr[j]){
+                        left_value = *ptr[j];
+                        found_left = 1;
+                        break;
+                    }
+                }
+                if (found_left){
+                    break; 
+                };
+            }
+
+            for (right = i + 1; right <= max_index; right++){
+                for (j=0; j<n; j++){
+                    if (&arr_start[right] == ptr[j]){
+                        right_value = *ptr[j];
+                        found_right = 1;
+                        break;
+                    }
+                }
+                if (found_right){
+                    break;
+                }
+            }
+            arr_start[i] = left_value + right_value;
+        }
+    }
 }

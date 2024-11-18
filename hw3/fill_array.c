@@ -2,38 +2,56 @@
 #include <stdio.h>
 
 void fill_array(int *ptr[], int n) {
-    int *base = ptr[0]; 
-    int max_index = 0;
-
+    int *arr_start = ptr[0]; 
+    
     for (int i = 0; i < n; i++) {
-        int idx = ptr[i] - base;  
-        if (idx > max_index) {
-            max_index = idx;
+        *ptr[i] = i;
+    }
+
+    int max_index = 0;
+    for (int i = 0; i < n; i++) {
+        int index = ptr[i] - arr_start;  
+        if (index > max_index) {
+            max_index = index;
         }
     }
 
     for (int i = 0; i <= max_index; i++) {
-        base[i] = -1;
-    }
+        int is_pointed = 0;
 
-    for (int i = 0; i < n; i++) {
-        int idx = ptr[i] - base;  
-        base[idx] = i;            
-    }
+        for (int j = 0; j < n; j++) {
+            if (&arr_start[i] == ptr[j]) {
+                is_pointed = 1;
+                break;
+            }
+        }
 
-    for (int i = 0; i <= max_index; i++) {
-        if (base[i] == -1) {  
-            int left = i - 1;
-            int right = i + 1;
+        if (!is_pointed) {
+            int left_value = 0, right_value = 0;
+            int found_left = 0, found_right = 0;
 
-            while (left >= 0 && base[left] == -1) left--;
+            for (int left = i - 1; left >= 0; left--) {
+                for (int j = 0; j < n; j++) {
+                    if (&arr_start[left] == ptr[j]) {
+                        left_value = *ptr[j];
+                        found_left = 1;
+                        break;
+                    }
+                }
+                if (found_left) break;
+            }
 
-            while (right <= max_index && base[right] == -1) right++;
-
-            int left_value = (left >= 0) ? base[left] : 0;
-            int right_value = (right <= max_index) ? base[right] : 0;
-
-            base[i] = left_value + right_value; 
+            for (int right = i + 1; right <= max_index; right++) {
+                for (int j = 0; j < n; j++) {
+                    if (&arr_start[right] == ptr[j]) {
+                        right_value = *ptr[j];
+                        found_right = 1;
+                        break;
+                    }
+                }
+                if (found_right) break;
+            }
+            arr_start[i] = left_value + right_value;
         }
     }
 }

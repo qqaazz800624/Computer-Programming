@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Pokemon.h"
+#include "Pokemon_1110.h"
 
 Pokemon::Pokemon() {
     Name = "No Name";

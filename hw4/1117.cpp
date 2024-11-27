@@ -1,4 +1,4 @@
-#include "Pokemon_1117.h"
+#include "Pokemon.h"
 
 Pokemon::Pokemon() {
     setData("No Name", 1, 1);
@@ -9,7 +9,7 @@ Pokemon::Pokemon(string name, int lv, int hp) {
 }
 
 void Pokemon::setData(string name, int lv, int hp) {
-    if (name.empty()) {
+    if (name.empty() || name.find_first_not_of(" \t\n") == string::npos) {
         cout << "Name can't be empty." << endl;
         Name = "No Name";
     } else {
@@ -47,11 +47,13 @@ Pokemon& Pokemon::operator>>(Pokemon &Target) {
         return *this;
     }
     if (Target.HpCur <= 0) {
-        cout << Name << " cannot attack fainted target " << Target.Name << "." << endl;
+        cout << Name << " cannot attack fainted target " << Target.Name << "." 
+             << endl;
         return *this;
     }
 
-    cout << Name << " Attack " << Target.Name << " " << Lv << " Points." << endl;
+    cout << Name << " Attack " << Target.Name << " " 
+         << Lv << " Points." << endl;
     Target.Defence(Lv);
 
     return *this;
@@ -69,10 +71,12 @@ void Pokemon::Cure() {
     HpCur = HpMax;
 }
 
-PokemonHealthCenter::PokemonHealthCenter(string name) : Name(name) {}
+PokemonHealthCenter::PokemonHealthCenter(string name) {
+    Name = name;
+}
 
 PokemonHealthCenter& PokemonHealthCenter::operator<<(Pokemon &p) {
-    p.HpCur = p.HpMax;  
     cout << p.Name << " has restored health at " << Name << "." << endl;
+    p.HpCur = p.HpMax;  
     return *this;
 }

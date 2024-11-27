@@ -64,10 +64,7 @@ void Pokemon::setData(string name, int lv, int hp){
 }
  
 Pokemon::Pokemon(){
-    Name = "No Name";
-    Lv = 1;
-    HpMax = 1;
-    HpCur = 1;
+    setData("No Name", 1, 1);
 }
  
 Pokemon::Pokemon(string na, int lv, int hp){

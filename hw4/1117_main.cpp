@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Pokemon.h"
+#include "Pokemon_1117.h"
 using namespace std;
  
  

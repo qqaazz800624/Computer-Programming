@@ -1,4 +1,4 @@
-#include "Pokemon.h"
+#include "Pokemon_1117.h"
 
 Pokemon::Pokemon() {
     setData("No Name", 1, 1);

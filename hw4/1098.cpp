@@ -21,18 +21,20 @@ Data carlist[6] = {
     {"Lamborghini", 15000, 40000}
 };
 
-class XMingGarage {
+class Start_a_business {
     private:
         vector<string> Garage; 
         int sellprice;         
         int totalcost;        
-        int earn;              
+        int earn;    
+        int car;          
 
     public:
-        XMingGarage() {
+        Start_a_business() {
             sellprice = 0;
             totalcost = 0;
             earn = 0;
+            car = 0;
         }
 
         void store(const string &x) {
@@ -87,7 +89,7 @@ class XMingGarage {
 };
 
 int main() {
-    XMingGarage garage;
+    Start_a_business garage;
     char command;
     string car_type;
 

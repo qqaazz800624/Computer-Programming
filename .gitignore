@@ -2,3 +2,4 @@ kinetic_energy
 .vscode
 main
 main.dSYM
+*.csv

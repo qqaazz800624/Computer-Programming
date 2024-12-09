@@ -6,9 +6,10 @@
 
 using namespace std;
 
-struct Soldier {
-    int health;
-    int attack;
+class Soldier {
+    public:
+        int health;
+        int attack;
 };
 
 bool loadArmy(const string &filename, vector<Soldier> &soldiers);

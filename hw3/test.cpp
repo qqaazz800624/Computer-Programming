@@ -1,117 +1,90 @@
 #include <iostream>
-#include <sstream>
+#include <fstream>
 #include <string>
+#include <vector>
+#include <sstream>
 
 using namespace std;
 
-struct Question {
-    int id;
-    string language;
-    bool answered;
-};
-
-class Disques {
-    private:
-        Question questions[50];
-        int questionCount;
-
+class Soldier {
     public:
-        Disques() : questionCount(0) {}
-
-        void ask(int id, const string &language) {
-            if (questionCount >= 50) {
-                cout << "Cannot add more questions." << endl;
-                return;
-            }
-            
-            questions[questionCount].id = id;
-            questions[questionCount].language = language;
-            questions[questionCount].answered = false;
-            questionCount++;
-
-            cout << "Ask " << id << " in " << language << endl;
-        }
-
-        void ans(int id) {
-            bool found = false;
-            for (int i = 0; i < questionCount; i++) {
-                if (questions[i].id == id) {
-                    questions[i].answered = true;
-                    found = true;
-                }
-            }
-            
-            if (found) {
-                cout << "Answer " << id << endl;
-            }
-        }
-
-        void wait(const string &language) {
-            bool hasUnanswered = false;
-            cout << "Search: " << language << endl;
-            
-            for (int i = 0; i < questionCount; i++) {
-                if (questions[i].language == language && !questions[i].answered) {
-                    cout << questions[i].id << " " << questions[i].language << endl;
-                    hasUnanswered = true;
-                }
-            }
-            
-            if (!hasUnanswered) {
-                cout << "No more questions" << endl;
-            }
-        }
-
-
-
-        void finish() {
-            bool hasAnswered = false;
-            cout << "Finished: " << endl;
-            
-            for (int i = 0; i < questionCount; i++) {
-                if (questions[i].answered) {
-                    cout << questions[i].id << " " << questions[i].language << endl;
-                    hasAnswered = true;
-                }
-            }
-            
-            if (!hasAnswered) {
-                cout << "No more questions" << endl;
-            }
-        }
+        int health;
+        int attack;
 };
+
+bool loadArmy(const string &filename, vector<Soldier> &soldiers);
+void battle(int dragonHealth, int dragonAttack, const vector<Soldier> &soldiers, const string &historyFilename);
+
 
 int main() {
-    Disques system;
-    string input;
+    int dragonHealth, dragonAttack;
+    string armyName;
+    
+    cin >> dragonHealth >> dragonAttack >> armyName;
+    vector<Soldier> soldiers;
+    string armyFilename = "./" + armyName + ".txt";
+    if (!loadArmy(armyFilename, soldiers)) {
+        ofstream historyFile("./history.txt");
+        historyFile << "failed:(";
+        return 0;
+    }
+    battle(dragonHealth, dragonAttack, soldiers, "./history.txt");
+    
+    return 0;
+}
 
-    while (getline(cin, input)) {
-        if (input.empty()) continue;
+bool loadArmy(const string &filename, vector<Soldier> &soldiers) {
+    ifstream armyFile(filename.c_str());
+    if (!armyFile.is_open()) {
+        return false;  
+    }
+    
+    int numSoldiers;
+    armyFile >> numSoldiers;
+    soldiers.resize(numSoldiers);
+    
+    for (int i = 0; i < numSoldiers; ++i) {
+        armyFile >> soldiers[i].health >> soldiers[i].attack;
+    }
+    return true;
+}
 
-        char command = input[0];
-        if (command == 'Q') {
-            int id;
-            string language;
-            char comma;
-            istringstream ss(input);
-            ss >> command >> comma >> id >> comma >> language;
-            system.ask(id, language);
-        } else if (command == 'A') {
-            int id;
-            char comma;
-            istringstream ss(input);
-            ss >> command >> comma >> id;
-            system.ans(id);
-        } else if (command == 'W') {
-            string language = input.substr(2);  
-            system.wait(language);
-        } else if (command == 'F') {
-            system.finish();
-        } else if (command == 'E') {
-            cout << "Exit" << endl;
+void battle(int dragonHealth, int dragonAttack, const vector<Soldier> &soldiers, const string &historyFilename) {
+    ofstream historyFile(historyFilename.c_str());
+    
+    if (dragonHealth <= 0) {
+        historyFile << "success!";
+        return;
+    }
+
+    bool dragonDefeated = false;
+    for (size_t i = 0; i < soldiers.size(); ++i) {
+        int soldierHealth = soldiers[i].health;
+        int soldierAttack = soldiers[i].attack;
+
+        if (soldierHealth <= 0) {
+            continue;
+        }
+
+        while (soldierHealth > 0 && dragonHealth > 0) {
+            dragonHealth -= soldierAttack;
+            if (dragonHealth <= 0) {
+                dragonDefeated = true;
+                historyFile << i << " " << soldierHealth << " " << dragonHealth << endl;
+                break;
+            }
+            soldierHealth -= dragonAttack;
+            historyFile << i << " " << soldierHealth << " " << dragonHealth << endl;
+        }
+
+        if (dragonDefeated) {
             break;
         }
     }
 
-    return 0;
+    if (dragonDefeated) {
+        historyFile << "success!";
+    } else {
+        historyFile << "failed:(";
+    }
 }

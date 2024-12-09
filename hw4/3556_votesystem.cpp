@@ -9,9 +9,9 @@ Ballot::Ballot(){
     checked = false; 
 }
 
-Ballot::Ballot(string ID, string Choice){
-    this -> ID = ID;
-    this -> Choice = Choice;
+Ballot::Ballot(string ParamID, string ParamChoice){
+    ID = ParamID;
+    Choice = ParamChoice;
     checked = false;
 }
 
@@ -33,11 +33,11 @@ string Ballot::getElected(){
     return Choice;
 }
 
-Vote_sys::Vote_sys(int members, int candidates){
-    this -> vote_members = 0;
-    this -> candidates = candidates;
-    this -> ballots = new Ballot[members];
-    this -> count = new int[candidates]();
+Vote_sys::Vote_sys(int ParamMembers, int ParamCandidates){
+    vote_members = 0;
+    candidates = ParamCandidates;
+    ballots = new Ballot[ParamMembers];
+    count = new int[ParamCandidates]();
 }
 
 Vote_sys::~Vote_sys(){

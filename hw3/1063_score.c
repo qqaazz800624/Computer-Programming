@@ -1,4 +1,4 @@
-#include "score.h"
+#include "1063_score.h"
 
 double Avg(int n, int *p){
     int i;

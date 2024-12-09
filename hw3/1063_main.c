@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "score.h"
+#include "1063_score.h"
 
 
 int main() {

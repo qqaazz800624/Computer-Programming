@@ -1,4 +1,4 @@
-#include "fill_array.h"
+#include "72_fill_array.h"
 #include <stdio.h>
 
 void fill_array(int *ptr[], int n){

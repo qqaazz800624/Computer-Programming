@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "fill_array.h"
+#include "72_fill_array.h"
 
 int main() {
     int arr[100] = {};

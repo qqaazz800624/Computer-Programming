@@ -13,7 +13,7 @@ Account::Account(int initCash){
 }
  
 Account::~Account() throw(){
-    delete [] this->investments;
+    delete [] this -> investments;
 }
  
 void Account::buy(Investment *datalist, size_t dataLength, int index){

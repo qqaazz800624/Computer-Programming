@@ -1,17 +1,20 @@
 #include "3225_subject.h"
+#include <iostream>
+
+using namespace std;
  
-Subject::Subject(std::string name){
+Subject::Subject(string name){
     this->name = name;
-    this->observers = std::vector<Observer *>();
+    this->observers = vector<Observer *>();
 }
 
 void Subject::addObserver(Observer *observer){
     observers.push_back(observer);
 }
 
-void Subject::notifyObservers(std::string message){
+void Subject::notifyObservers(string message){
     size_t i;
-    for (i=0; i < observers.size(); ++i){
+    for (i=0; i<observers.size(); ++i){
         observers[i]->notify(message, name);
     }
 }

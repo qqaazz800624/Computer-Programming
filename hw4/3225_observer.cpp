@@ -2,29 +2,29 @@
  
 using namespace std;
  
-PCDevice::PCDevice(std::string ipAddress){
+PCDevice::PCDevice(string ipAddress){
     this->ipAddress = ipAddress;
 }
  
-iOSDevice::iOSDevice(std::string apnsToken){
+iOSDevice::iOSDevice(string apnsToken){
     this->apnsToken = apnsToken;
 }
  
-AndroidDevice::AndroidDevice(std::string fcmToken){
+AndroidDevice::AndroidDevice(string fcmToken){
     this->fcmToken = fcmToken;
 }
 
-void PCDevice::notify(std::string msg, std::string sender){
+void PCDevice::notify(string msg, string sender){
     cout << "PC with IP[" << ipAddress << "] received message from " 
          << sender << ": " << msg << endl;
 }
 
-void iOSDevice::notify(std::string msg, std::string sender){
+void iOSDevice::notify(string msg, string sender){
     cout << "ios device[" << apnsToken << "] received message from " 
          << sender << ": " << msg << endl;
 }
 
-void AndroidDevice::notify(std::string msg, std::string sender){
+void AndroidDevice::notify(string msg, string sender){
     cout << "android device[" << fcmToken << "] received message from " 
          << sender << ": " << msg << endl;
 }

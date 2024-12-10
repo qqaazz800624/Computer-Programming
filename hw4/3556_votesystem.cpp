@@ -41,8 +41,8 @@ Vote_sys::Vote_sys(int ParamMembers, int ParamCandidates){
 }
 
 Vote_sys::~Vote_sys(){
-    delete [] ballots;
-    delete [] count;
+    delete [] this -> ballots;
+    delete [] this -> count;
 }
 
 void Vote_sys::add_ballot(Ballot ballot){

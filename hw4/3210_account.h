@@ -6,7 +6,7 @@ class Account {
  
     private:
         int cash;
-        int investmentCount = 0;
+        int investmentCount;
         Investment *investments;
     
     public:

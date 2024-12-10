@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
     }
     file.close();
  
-    char command = 0;
+    char command;
     cin >> command;
     while (command != 'q') {
         if (command == 'b') {

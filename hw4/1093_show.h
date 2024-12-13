@@ -1,9 +1,10 @@
 #ifndef SHOW_H
 #define SHOW_H
 
+using namespace std;
 
 struct Person {
-    char name[100];  
+    string name;  
     int height;      
     int weight;      
 };

@@ -13,19 +13,29 @@ class Pokemon {
         int Hp;
 
     public:
-        Pokemon(const string &name = "", int lv = 0, int hp = 0) : Name(name), Lv(lv), Hp(hp) {}
+        Pokemon(){
+            Name = "";
+            Lv = 0;
+            Hp = 0;
+        }
+
+        Pokemon(string name, int lv, int hp) {
+            Name = name;
+            Lv = lv;
+            Hp = hp;
+        }
 
         string getName() const { 
             return Name; 
-            }
+        }
 
         int getLv() const { 
             return Lv; 
-            }
+        }
 
         int getHp() const { 
             return Hp; 
-            }
+        }
 
         void print() const {
             cout << "Name: " << Name << endl;

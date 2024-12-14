@@ -15,9 +15,17 @@ class Pokemon {
     public:
         Pokemon(const string &name = "", int lv = 0, int hp = 0) : Name(name), Lv(lv), Hp(hp) {}
 
-        string getName() const { return Name; }
-        int getLv() const { return Lv; }
-        int getHp() const { return Hp; }
+        string getName() const { 
+            return Name; 
+            }
+
+        int getLv() const { 
+            return Lv; 
+            }
+
+        int getHp() const { 
+            return Hp; 
+            }
 
         void print() const {
             cout << "Name: " << Name << endl;
@@ -51,9 +59,9 @@ int main() {
     vector<Pokemon> pokemons;
 
     for (int i = 0; i < n; ++i) {
-        char name[100];
+        string name;
         int lv, hp;
-        scanf("%s %d %d", name, &lv, &hp);  
+        cin >> name >> lv >> hp;
         pokemons.push_back(Pokemon(name, lv, hp));
     }
 

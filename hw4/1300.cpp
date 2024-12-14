@@ -37,7 +37,7 @@ class Employee {
 
 };
 
-int countCritics(int n, vector<Employee>& employees, int starter) {
+int countCritics(int n, vector<Employee> &employees, int starter) {
     queue<int> q;
     set<int> criticized; 
     q.push(starter - 1); 

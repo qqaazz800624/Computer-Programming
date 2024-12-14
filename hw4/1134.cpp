@@ -2,17 +2,15 @@
 //#include <iostream>
  
 using namespace std;
-//建立一個結構
  
 class Player_Unknown_Battle_Ground{
     private:
-    //設變數
+    
     char Weapon[2][64];
     char Equipment[5][64];
     char Item[5][64];
     int nw,ne,ni;
     public:
-    //把值初始化
     void start(){
         cout <<"GAME START!\n";
         nw=0;ne=0;ni=0;
@@ -20,9 +18,8 @@ class Player_Unknown_Battle_Ground{
         for(int i=0;i<5;i++){strcpy(Equipment[i],"");}
         for(int i=0;i<5;i++){strcpy(Item[i],"");}
     }
-    //進行撿裝備的動作
+    
     void pickup(char type,char name[]){
-        //判斷種類
         if(type=='w'){
             if(nw==2){cout << "Weapon capacity full, pickup failed.\n";}
             else{
@@ -55,9 +52,8 @@ class Player_Unknown_Battle_Ground{
         }
         else{cout <<"Invalid Command\n";}
     }
-    //進行丟裝備的動作
+    
     void drop(char type,char name[]){
-        //判斷種類
         if(type=='w'){
             if(nw==0){cout << "Weapon bag empty, nothing to toss.\n";}
             else{
@@ -103,7 +99,6 @@ class Player_Unknown_Battle_Ground{
         else{cout <<"Invalid Command\n";}
  
     }
-    //顯示目前所拿的裝備
     void show(){
         cout <<"Weapon:\n";
         for(int i=0;i<2;i++){
@@ -130,25 +125,27 @@ int main(){
     game.start();
     
     char command;
+    char type;
+    char name[64];
     
-    while(true){
+    while(1){
         cin >> command;
-        if (command == 'p'){
-            char type;
-            char name[64];
-            cin >> type >> name;
-            game.pickup(type, name);
-        } else if (command == 'd'){
-            char type;
-            char name[64];
-            cin >> type >> name;
-            game.drop(type, name);
-        } else if (command == 's'){
-            game.show();
-        } else if (command == 'q'){
-            break;;
+        switch (command){
+            case 'p':
+                cin >> type >> name;
+                game.pickup(type, name);
+                break;
+            case 'd':
+                cin >> type >> name;
+                game.drop(type, name);
+                break;
+            case 's':
+                game.show();
+                break;
+            case 'q':
+                game.ended();
+                return 0;
         }
     }
-    game.ended();
 return 0;
 }

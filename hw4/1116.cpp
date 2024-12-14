@@ -1,47 +1,14 @@
 #include<iostream> 
-#include "Pokemon_1116.h"
+#include "1116_Pokemon.h"
  
 using namespace std;
  
-void Pokemon::ShowInfo(){
-    cout << "Name: " << Name << endl;
-    cout << "Lv: " << Lv << endl;
-    cout << "HP: " << HpCur << "/" << HpMax << endl << endl;
-}
- 
-void Pokemon::Attack(Pokemon &Target){
- 
-    if(HpCur <= 0){
-        cout << Name << " is unable to attack." << endl;
-        return;
-    }
-    if(Target.HpCur <= 0){
-        cout << Name << " cannot attack fainted target " << Target.Name << "." <<endl;
-        return;
-    }
-    //Pikachu is unable to attack.
-    //Mewtwo cannot attack fainted target Pikachu.
- 
-    cout << Name << " Attack " << Target.Name << " "
-         << Lv << " Points." << endl;
-    Target.Defence(Lv);
- 
+Pokemon::Pokemon(){
+    setData("No Name", 1, 1);
 }
 
-void Pokemon::Defence( int atkp ){
-    int defp = 0; //此處防御力無用
-    HpCur -= (atkp-defp);
- 
-    if(HpCur <= 0){
-        cout << Name << " is fainted." << endl;
-        HpCur = 0;
-    }
-}
-
-void Pokemon::Cure(){
-    cout << Name << " restore health." << endl;
-    //回復體力
-    HpCur = HpMax;
+Pokemon::Pokemon(string na, int lv, int hp){
+    setData(na, lv, hp);
 }
 
 void Pokemon::setData(string name, int lv, int hp){
@@ -62,20 +29,48 @@ void Pokemon::setData(string name, int lv, int hp){
     Lv = lv;
     HpCur = HpMax = hp;
 }
- 
-Pokemon::Pokemon(){
-    setData("No Name", 1, 1);
+
+void Pokemon::ShowInfo(){
+    cout << "Name: " << Name << endl;
+    cout << "Lv: " << Lv << endl;
+    cout << "HP: " << HpCur << "/" << HpMax << endl << endl;
 }
  
-Pokemon::Pokemon(string na, int lv, int hp){
-    setData(na, lv, hp);
-}
+void Pokemon::Attack(Pokemon &Target){
+    if(HpCur <= 0){
+        cout << Name << " is unable to attack." << endl;
+        return;
+    }
+    if(Target.HpCur <= 0){
+        cout << Name << " cannot attack fainted target " << Target.Name << "." <<endl;
+        return;
+    }
  
-PokemonHealthCenter::PokemonHealthCenter(string na){
-    Name = na;
+    cout << Name << " Attack " << Target.Name << " "
+         << Lv << " Points." << endl;
+    Target.Defence(Lv);
+}
+
+void Pokemon::Defence(int atkp){
+    int defp = 0; 
+    HpCur -= (atkp-defp);
+ 
+    if(HpCur <= 0){
+        cout << Name << " is fainted." << endl;
+        HpCur = 0;
+    }
+}
+
+void Pokemon::Cure(){
+    cout << Name << " restore health." << endl;
+    HpCur = HpMax;
+}
+
+ 
+PokemonHealthCenter::PokemonHealthCenter(string name){
+    this -> Name = name;
 }
 void PokemonHealthCenter::Cure(Pokemon &p){
-    cout << p.Name << " has restored health at " <<Name << ".\n";
-    //回復 p 到滿血
+    cout << p.Name << " has restored health at " << this -> Name << ".\n";
     p.HpCur = p.HpMax;
 }

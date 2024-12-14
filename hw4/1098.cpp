@@ -6,10 +6,11 @@
 
 using namespace std;
 
-struct Data {
-    string type;
-    int buy;
-    int sell;
+class Data {
+    public:
+        string type;
+        int buy;
+        int sell;
 };
 
 Data carlist[6] = {
@@ -24,10 +25,10 @@ Data carlist[6] = {
 class Start_a_business {
     private:
         vector<string> Garage; 
+        int car;
         int sellprice;         
         int totalcost;        
-        int earn;    
-        int car;          
+        int earn;         
 
     public:
         Start_a_business() {
@@ -35,6 +36,7 @@ class Start_a_business {
             totalcost = 0;
             earn = 0;
             car = 0;
+            Garage.clear();
         }
 
         void store(const string &x) {
@@ -48,6 +50,7 @@ class Start_a_business {
                     totalcost += carlist[i].buy;
                     sellprice += carlist[i].sell;
                     earn -= carlist[i].buy;
+                    car++;
                     cout << "Store in a car.\nType: " << x
                         << "\nnumber car in garage: " << Garage.size() << endl;
                     return;
@@ -63,6 +66,7 @@ class Start_a_business {
                         if (carlist[j].type == x) {
                             sellprice -= carlist[j].sell;
                             earn += carlist[j].sell;
+                            car--;
                             cout << "You sell a car.\nType: " << x
                                 << "\nSell price: " << carlist[j].sell
                                 << "\nnumber car left in garage: " << Garage.size() - 1 << endl;
@@ -93,13 +97,9 @@ int main() {
     char command;
     string car_type;
 
-    while (true) {
+    while (1) {
         cin >> command;
-        if (command == 'q') {
-            cout << "Thank you for visiting XMing_Garage. Bye bye." << endl;
-            break;
-        }
-        switch (command) {
+        switch (command){
             case 'a':
                 cin >> car_type;
                 garage.store(car_type);
@@ -117,9 +117,11 @@ int main() {
             case 'p':
                 garage.displayp();
                 break;
+            case 'q':
+                cout << "Thank you for visiting XMing_Garage. Bye bye." << endl;
+                return 0;
             default:
-                cout << "Invalid command!" << endl;
-                break;
+                cout << "Invalid command." << endl;
         }
     }
 

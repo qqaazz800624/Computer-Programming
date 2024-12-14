@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Pokemon_1117.h"
+#include "1117_Pokemon.h"
 using namespace std;
  
  
@@ -10,7 +10,6 @@ int main()
     int Lv1, Lv2;
     int Hp1, Hp2;
  
-    //cin >> pcName1;
     getline(cin, pcName1);
     PC pc1(pcName1);
  

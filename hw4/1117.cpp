@@ -1,4 +1,4 @@
-#include "Pokemon_1117.h"
+#include "1117_Pokemon.h"
 
 Pokemon::Pokemon() {
     setData("No Name", 1, 1);
@@ -40,7 +40,6 @@ void Pokemon::ShowInfo() {
     cout << endl;
 }
 
-
 Pokemon& Pokemon::operator>>(Pokemon &Target) {
     if (HpCur <= 0) {
         cout << Name << " is unable to attack." << endl;
@@ -51,11 +50,9 @@ Pokemon& Pokemon::operator>>(Pokemon &Target) {
              << endl;
         return *this;
     }
-
     cout << Name << " Attack " << Target.Name << " " 
          << Lv << " Points." << endl;
     Target.Defence(Lv);
-
     return *this;
 }
 
@@ -68,6 +65,7 @@ void Pokemon::Defence(int atkp) {
 }
 
 void Pokemon::Cure() {
+    cout << Name << " restore health." << endl;
     HpCur = HpMax;
 }
 

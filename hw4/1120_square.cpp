@@ -7,12 +7,7 @@ Square::Square() {
 }
 
 Square::Square(int n) {
-    if (n < 1){
-        cout << "len setting error" << endl;
-        len = 1;
-    } else {
-        len = n;
-    }
+    setLen(n);
 }
 
 void Square::setLen(int n) {

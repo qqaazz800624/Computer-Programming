@@ -20,11 +20,11 @@ class Pokemon {
 
         ~Pokemon();
 
+        void setData(string name, int lv, int hp);
         void ShowInfo();
         void Attack(Pokemon &Target);
         void Defence(int damage);
         void Cure();
-        void setData(string name, int lv, int hp);
 };
 
 #endif

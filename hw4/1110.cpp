@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Pokemon_1110.h"
+#include "1110_Pokemon.h"
 
 Pokemon::Pokemon() {
     Name = "No Name";
@@ -9,7 +9,7 @@ Pokemon::Pokemon() {
 }
 
 Pokemon::Pokemon(string name, int lv, int hp) {
-    setData(name, lv, hp);
+    Pokemon::setData(name, lv, hp);
 }
 
 Pokemon::~Pokemon() {
@@ -18,7 +18,7 @@ Pokemon::~Pokemon() {
 
 void Pokemon::setData(string name, int lv, int hp) {
     if (name.empty()){
-        cout << "Name setting error." << endl;
+        cout << "Name can't be empty." << endl;
         Name = "No Name";
     } else {
         Name = name;

@@ -50,19 +50,23 @@ int main(){
         cin >> enter;
         int m;
 
-        if (enter == 'q'){
-            e.quit();
-            break;
-        } else if (enter == 's'){
-            int m;
-            cin >> m;
-            e.store(m);
-        } else if (enter == 'p'){
-            int m;
-            cin >> m;
-            e.pay(m);
-        } else if (enter == 'd'){
-            e.display();
+        switch(enter){
+            case 's':
+                cin >> m;
+                e.store(m);
+                break;
+            case 'p':
+                cin >> m;
+                e.pay(m);
+                break;
+            case 'd':
+                e.display();
+                break;
+            case 'q':
+                e.quit();
+                return 0;
+            default:
+                break;  
         }
     }
     

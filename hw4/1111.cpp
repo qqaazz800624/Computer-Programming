@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Pokemon_1111.h"
+#include "1111_Pokemon.h"
 
 Pokemon::Pokemon() {
     Name = "No Name";
@@ -11,7 +11,7 @@ Pokemon::Pokemon() {
 }
 
 Pokemon::Pokemon(string name, int lv, int hp) {
-    setData(name, lv, hp);
+    Pokemon::setData(name, lv, hp);
     items = new string[Lv];
     itemNum = 0;
 }

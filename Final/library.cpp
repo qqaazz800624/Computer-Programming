@@ -1,7 +1,6 @@
 #include "library.h"
 #include <iostream>
 #include <algorithm>
-#include <vector>
 
 // Constructor
 Library::Library(int seniorAgeLimit) : seniorAgeLimit(seniorAgeLimit) {}
@@ -60,24 +59,35 @@ void Library::returnBook(const std::string &readerId, const std::string &bookId)
     std::cout << readerId << " successfully returned " << bookId << std::endl;
 }
 
-// Helper function for sorting books
-bool Library::compareBooks(const Book &a, const Book &b, const std::string &sortBy) {
-    if (sortBy == "id") return a.id < b.id;
-    if (sortBy == "title") return a.title < b.title;
-    if (sortBy == "author") return a.author < b.author;
-    return false;
+// Compare books by ID
+bool Library::compareBooksById(const Book &a, const Book &b) {
+    return a.id < b.id;
 }
 
-// Display books sorted by specified field
+// Compare books by title
+bool Library::compareBooksByTitle(const Book &a, const Book &b) {
+    return a.title < b.title;
+}
+
+// Compare books by author
+bool Library::compareBooksByAuthor(const Book &a, const Book &b) {
+    return a.author < b.author;
+}
+
+// Display books
 void Library::displayBooks(const std::string &sortBy) const {
     std::vector<Book> bookList;
-    for (const auto &entry : books) {
-        bookList.push_back(entry.second);
+    for (std::map<std::string, Book>::const_iterator it = books.begin(); it != books.end(); ++it) {
+        bookList.push_back(it->second);
     }
 
-    std::sort(bookList.begin(), bookList.end(), [&](const Book &a, const Book &b) {
-        return compareBooks(a, b, sortBy);
-    });
+    if (sortBy == "id") {
+        std::sort(bookList.begin(), bookList.end(), compareBooksById);
+    } else if (sortBy == "title") {
+        std::sort(bookList.begin(), bookList.end(), compareBooksByTitle);
+    } else if (sortBy == "author") {
+        std::sort(bookList.begin(), bookList.end(), compareBooksByAuthor);
+    }
 
     std::cout << "=====" << std::endl;
     for (size_t i = 0; i < bookList.size(); ++i) {
@@ -97,23 +107,28 @@ void Library::displayBooks(const std::string &sortBy) const {
     std::cout << "=====" << std::endl;
 }
 
-// Helper function for sorting readers
-bool Library::compareReaders(const Reader &a, const Reader &b, const std::string &sortBy) {
-    if (sortBy == "id") return a.id < b.id;
-    if (sortBy == "age") return a.age < b.age;
-    return false;
+// Compare readers by ID
+bool Library::compareReadersById(const Reader &a, const Reader &b) {
+    return a.id < b.id;
 }
 
-// Display readers sorted by specified field
+// Compare readers by age
+bool Library::compareReadersByAge(const Reader &a, const Reader &b) {
+    return a.age < b.age;
+}
+
+// Display readers
 void Library::displayReaders(const std::string &sortBy) const {
     std::vector<Reader> readerList;
-    for (const auto &entry : readers) {
-        readerList.push_back(entry.second);
+    for (std::map<std::string, Reader>::const_iterator it = readers.begin(); it != readers.end(); ++it) {
+        readerList.push_back(it->second);
     }
 
-    std::sort(readerList.begin(), readerList.end(), [&](const Reader &a, const Reader &b) {
-        return compareReaders(a, b, sortBy);
-    });
+    if (sortBy == "id") {
+        std::sort(readerList.begin(), readerList.end(), compareReadersById);
+    } else if (sortBy == "age") {
+        std::sort(readerList.begin(), readerList.end(), compareReadersByAge);
+    }
 
     std::cout << "=====" << std::endl;
     for (size_t i = 0; i < readerList.size(); ++i) {

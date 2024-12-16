@@ -2,8 +2,6 @@
 #include <iostream>
 #include <sstream>
  
-// Investment::Investment(): date(""), high(0), low(0){
-// }
 
 Investment::Investment(){
     date = "";
@@ -12,7 +10,6 @@ Investment::Investment(){
 }
  
 Investment::Investment(string data){
-    // TODO: 需實做建構子
     stringstream ss(data);
     string lowStr, highStr;
     

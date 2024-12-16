@@ -2,8 +2,8 @@
 #define account_hpp
  
 #include "3210_investment.h"
+
 class Account {
- 
     private:
         int cash;
         int investmentCount;
@@ -18,4 +18,4 @@ class Account {
         int getCash();
 };
  
-#endif /* account_hpp */
+#endif 

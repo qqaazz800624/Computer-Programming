@@ -2,9 +2,7 @@
 #include <iostream>
  
 using namespace std;
- 
-// Account::Account(int initCash) : investmentCount(0), cash(initCash), investments(new Investment[50]())
-// {}
+
 
 Account::Account(int initCash){
    cash = initCash;
@@ -17,7 +15,6 @@ Account::~Account() throw(){
 }
  
 void Account::buy(Investment *datalist, size_t dataLength, int index){
-   // TODO: 實作買入動作
    if (index < 0 || static_cast<size_t>(index) >= dataLength){
       cout << "index out of range" << endl;
       return;
@@ -33,7 +30,6 @@ void Account::buy(Investment *datalist, size_t dataLength, int index){
 }
  
 void Account::sellLast(const int currentPrice){
-   // TODO: 實作賣出最近買入商品
    if (investmentCount == 0){
       cout << "no investment" << endl;
       return;
@@ -44,7 +40,6 @@ void Account::sellLast(const int currentPrice){
 }
  
 void Account::list(){
-   // TODO: 實作列出投資紀錄
    if (investmentCount == 0){
       cout << "no investment" << endl;
       return;

@@ -4,12 +4,12 @@
 using namespace std;
  
 class Investment {
-public:
-    string date;
-    int high;
-    int low;
-    Investment();
-    Investment(string data);
+    public:
+        string date;
+        int high;
+        int low;
+        Investment();
+        Investment(string data);
 };
  
-#endif /* investment_hpp */
+#endif 
